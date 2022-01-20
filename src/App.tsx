@@ -1,3 +1,5 @@
+import { Routes, Route } from "react-router-dom";
+
 import Button from "./components/Button";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -10,15 +12,17 @@ import Profile from "./pages/Profile";
 function App() {
   return (
     <div>
-      <h1>App</h1>
       <Header />
-      <Button />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/myproduct" element={<MyProduct />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/productdetail" element={<ProductDetail />} />
+      </Routes>
+
       <Footer />
-      <Home />
-      <Order />
-      <MyProduct />
-      <Profile />
-      <ProductDetail />
     </div>
   );
 }
