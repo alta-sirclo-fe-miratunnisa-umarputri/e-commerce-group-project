@@ -44,6 +44,14 @@ const Header = () => {
     navigate("/");
   };
 
+  const handleMyProduct = () => {
+    navigate("/myproduct");
+  };
+
+  const handleProfile = () => {
+    navigate("/profile");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -90,13 +98,13 @@ const Header = () => {
         <p>Home</p>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleMyProduct}>
           <StoreIcon />
         </IconButton>
         <p>My Product</p>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleProfile}>
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
@@ -138,10 +146,10 @@ const Header = () => {
             <IconButton size="large" color="inherit" onClick={handleHome}>
               <HomeIcon />
             </IconButton>
-            <IconButton size="large" color="inherit">
+            <IconButton size="large" color="inherit" onClick={handleMyProduct}>
               <StoreIcon />
             </IconButton>
-            <IconButton size="large" color="inherit">
+            <IconButton size="large" color="inherit" onClick={handleProfile}>
               <AccountCircle />
             </IconButton>
             <IconButton size="large" color="inherit">
