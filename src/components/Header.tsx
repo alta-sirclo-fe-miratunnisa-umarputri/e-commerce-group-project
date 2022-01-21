@@ -126,7 +126,7 @@ const Header = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleLogin}>
           <LoginIcon />
         </IconButton>
         <p>Login</p>
