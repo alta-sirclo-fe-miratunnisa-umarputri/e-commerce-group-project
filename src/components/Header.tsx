@@ -10,7 +10,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import StoreIcon from "@mui/icons-material/Store";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
 
@@ -122,7 +122,7 @@ const Header = () => {
       </MenuItem>
       <MenuItem>
         <IconButton size="large" color="inherit">
-          <ExitToAppIcon />
+          <LogoutIcon />
         </IconButton>
         <p>Logout</p>
       </MenuItem>
@@ -161,7 +161,7 @@ const Header = () => {
               <ShoppingCartIcon />
             </IconButton>
             <IconButton size="large" color="inherit">
-              <ExitToAppIcon />
+              <LogoutIcon />
             </IconButton>
           </Box>
 
