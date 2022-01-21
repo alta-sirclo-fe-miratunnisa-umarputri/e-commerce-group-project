@@ -52,6 +52,10 @@ const Header = () => {
     navigate("/profile");
   };
 
+  const handleCart = () => {
+    navigate("/cart");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -110,7 +114,7 @@ const Header = () => {
         <p>Profile</p>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleCart}>
           <ShoppingCartIcon />
         </IconButton>
         <p>Cart</p>
@@ -152,7 +156,7 @@ const Header = () => {
             <IconButton size="large" color="inherit" onClick={handleProfile}>
               <AccountCircle />
             </IconButton>
-            <IconButton size="large" color="inherit">
+            <IconButton size="large" color="inherit" onClick={handleCart}>
               <ShoppingCartIcon />
             </IconButton>
             <IconButton size="large" color="inherit">
