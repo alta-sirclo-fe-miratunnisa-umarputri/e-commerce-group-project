@@ -14,7 +14,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import style from "./Header.module.css";
@@ -22,20 +22,18 @@ import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const location = useLocation();
+  const [isLogin, setIsLogin] = useState(true);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const isShowingSearchBar =
+    location.pathname === "/" || location.pathname === "/myproduct";
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {
@@ -144,15 +142,17 @@ const Header = () => {
         <Toolbar>
           <img alt="logo" src={logo} className={style.logo} />
 
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          {isShowingSearchBar && (
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          )}
 
           <Box sx={{ flexGrow: 1 }} />
 
