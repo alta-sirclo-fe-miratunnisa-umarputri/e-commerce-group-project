@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from "react";
+import { useState, MouseEvent } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,7 +11,9 @@ import HomeIcon from "@mui/icons-material/Home";
 import StoreIcon from "@mui/icons-material/Store";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/logo.png";
@@ -20,7 +22,7 @@ import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState();
+  const [isLogin, setIsLogin] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
@@ -80,7 +82,7 @@ const Header = () => {
   );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
+  const mobileMenuLogin = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
@@ -128,6 +130,36 @@ const Header = () => {
       </MenuItem>
     </Menu>
   );
+  const mobileMenuNotLogin = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton size="large" color="inherit" onClick={handleHome}>
+          <LoginIcon />
+        </IconButton>
+        <p>Login</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton size="large" color="inherit" onClick={handleMyProduct}>
+          <AppRegistrationIcon />
+        </IconButton>
+        <p>Register</p>
+      </MenuItem>
+    </Menu>
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -147,23 +179,40 @@ const Header = () => {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" color="inherit" onClick={handleHome}>
-              <HomeIcon />
-            </IconButton>
-            <IconButton size="large" color="inherit" onClick={handleMyProduct}>
-              <StoreIcon />
-            </IconButton>
-            <IconButton size="large" color="inherit" onClick={handleProfile}>
-              <AccountCircle />
-            </IconButton>
-            <IconButton size="large" color="inherit" onClick={handleCart}>
-              <ShoppingCartIcon />
-            </IconButton>
-            <IconButton size="large" color="inherit">
-              <LogoutIcon />
-            </IconButton>
-          </Box>
+          {isLogin && (
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <IconButton size="large" color="inherit" onClick={handleHome}>
+                <HomeIcon />
+              </IconButton>
+              <IconButton
+                size="large"
+                color="inherit"
+                onClick={handleMyProduct}
+              >
+                <StoreIcon />
+              </IconButton>
+              <IconButton size="large" color="inherit" onClick={handleProfile}>
+                <AccountCircle />
+              </IconButton>
+              <IconButton size="large" color="inherit" onClick={handleCart}>
+                <ShoppingCartIcon />
+              </IconButton>
+              <IconButton size="large" color="inherit">
+                <LogoutIcon />
+              </IconButton>
+            </Box>
+          )}
+
+          {!isLogin && (
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <IconButton size="large" color="inherit">
+                <LoginIcon />
+              </IconButton>
+              <IconButton size="large" color="inherit">
+                <AppRegistrationIcon />
+              </IconButton>
+            </Box>
+          )}
 
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -180,7 +229,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
 
-      {renderMobileMenu}
+      {isLogin ? mobileMenuLogin : mobileMenuNotLogin}
       {renderMenu}
     </Box>
   );
