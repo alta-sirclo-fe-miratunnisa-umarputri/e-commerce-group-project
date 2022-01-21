@@ -12,12 +12,14 @@ import StoreIcon from "@mui/icons-material/Store";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import style from "./Header.module.css";
 import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -36,6 +38,10 @@ const Header = () => {
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleHome = () => {
+    navigate("/");
   };
 
   const menuId = "primary-search-account-menu";
@@ -78,7 +84,7 @@ const Header = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleHome}>
           <HomeIcon />
         </IconButton>
         <p>Home</p>
@@ -129,7 +135,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" color="inherit">
+            <IconButton size="large" color="inherit" onClick={handleHome}>
               <HomeIcon />
             </IconButton>
             <IconButton size="large" color="inherit">
