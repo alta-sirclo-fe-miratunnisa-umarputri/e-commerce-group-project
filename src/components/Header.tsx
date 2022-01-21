@@ -22,12 +22,11 @@ import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleMobileMenuClose = () => {
@@ -58,28 +57,6 @@ const Header = () => {
   const handleCart = () => {
     navigate("/cart");
   };
-
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const mobileMenuLogin = (
@@ -147,13 +124,13 @@ const Header = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" color="inherit" onClick={handleHome}>
+        <IconButton size="large" color="inherit">
           <LoginIcon />
         </IconButton>
         <p>Login</p>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" color="inherit" onClick={handleMyProduct}>
+        <IconButton size="large" color="inherit">
           <AppRegistrationIcon />
         </IconButton>
         <p>Register</p>
@@ -230,7 +207,6 @@ const Header = () => {
       </AppBar>
 
       {isLogin ? mobileMenuLogin : mobileMenuNotLogin}
-      {renderMenu}
     </Box>
   );
 };
