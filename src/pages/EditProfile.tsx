@@ -54,12 +54,12 @@ const EditProfile = () => {
             defaultValue="user.phonenumber"
           />
           <TextField
-            autoFocus
-            margin="dense"
             id="editAddress"
             label="Address"
             type="text"
+            multiline
             fullWidth
+            maxRows={5}
             variant="standard"
             defaultValue="user.address"
           />

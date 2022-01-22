@@ -15,6 +15,11 @@ const Profile = () => {
     navigate("/editpassword");
   }
 
+  const handleDeleteAccount = () => {
+    navigate("/");
+    // delete account and redirect to homepage
+  }
+
   return (
     <div className='main-container'>
       <div className='photo-container'>
@@ -64,6 +69,7 @@ const Profile = () => {
           </Button> <br />
         <Button
           className='button3' 
+          onClick={() => handleDeleteAccount()}
           variant="outlined" size="small" color="error">Delete Account
           </Button>
       </div>
