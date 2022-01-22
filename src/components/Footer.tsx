@@ -11,10 +11,11 @@ import gooAppStore from "../assets/goo-app-store.png";
 const Footer = () => {
   const location = useLocation();
 
-  const isOrderPage = location.pathname === "/order";
+  const isFooterFixed =
+    location.pathname === "/order" || location.pathname === "/productdetail";
 
   return (
-    <footer className={isOrderPage ? style.positionOrder : style.position}>
+    <footer className={isFooterFixed ? style.positionOrder : style.position}>
       <Box py={{ xs: 1, sm: 1 }} bgcolor="text.secondary">
         <Container maxWidth="lg">
           <Grid container>
