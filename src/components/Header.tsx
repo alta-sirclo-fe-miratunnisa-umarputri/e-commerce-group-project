@@ -137,77 +137,83 @@ const Header = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <img alt="logo" src={logo} className={style.logo} />
+    <header className={style.position}>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <img alt="logo" src={logo} className={style.logo} />
 
-          {isShowingSearchBar && (
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          )}
+            {isShowingSearchBar && (
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+            )}
 
-          <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ flexGrow: 1 }} />
 
-          {isLogin && (
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton size="large" color="inherit" onClick={handleHome}>
-                <HomeIcon />
-              </IconButton>
+            {isLogin && (
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <IconButton size="large" color="inherit" onClick={handleHome}>
+                  <HomeIcon />
+                </IconButton>
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  onClick={handleMyProduct}
+                >
+                  <StoreIcon />
+                </IconButton>
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  onClick={handleProfile}
+                >
+                  <AccountCircle />
+                </IconButton>
+                <IconButton size="large" color="inherit" onClick={handleCart}>
+                  <ShoppingCartIcon />
+                </IconButton>
+                <IconButton size="large" color="inherit">
+                  <LogoutIcon />
+                </IconButton>
+              </Box>
+            )}
+
+            {!isLogin && (
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <IconButton size="large" color="inherit">
+                  <LoginIcon />
+                </IconButton>
+                <IconButton size="large" color="inherit">
+                  <AppRegistrationIcon />
+                </IconButton>
+              </Box>
+            )}
+
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
                 color="inherit"
-                onClick={handleMyProduct}
               >
-                <StoreIcon />
-              </IconButton>
-              <IconButton size="large" color="inherit" onClick={handleProfile}>
-                <AccountCircle />
-              </IconButton>
-              <IconButton size="large" color="inherit" onClick={handleCart}>
-                <ShoppingCartIcon />
-              </IconButton>
-              <IconButton size="large" color="inherit">
-                <LogoutIcon />
+                <MoreIcon />
               </IconButton>
             </Box>
-          )}
+          </Toolbar>
+        </AppBar>
 
-          {!isLogin && (
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton size="large" color="inherit">
-                <LoginIcon />
-              </IconButton>
-              <IconButton size="large" color="inherit">
-                <AppRegistrationIcon />
-              </IconButton>
-            </Box>
-          )}
-
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      {isLogin ? mobileMenuLogin : mobileMenuNotLogin}
-    </Box>
+        {isLogin ? mobileMenuLogin : mobileMenuNotLogin}
+      </Box>
+    </header>
   );
 };
 
