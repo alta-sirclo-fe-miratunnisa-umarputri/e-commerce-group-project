@@ -1,9 +1,20 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ProfileImage from '../assets/app-store.png';
 import './Profile.css'
 
 const Profile = () => {
+  const navigate = useNavigate();
+  
+  const handleEditProfile = () => {
+    navigate("/editprofile");
+  }
+
+  const handleEditPassword = () => {
+    navigate("/editpassword");
+  }
+
   return (
     <div className='main-container'>
       <div className='photo-container'>
@@ -43,10 +54,12 @@ const Profile = () => {
       <div className='button-container'>
         <Button 
           className='button1'
+          onClick={() => handleEditProfile()}
           variant="outlined" size="small">Edit Profile
           </Button> <br />
         <Button 
           className='button2'
+          onClick={() => handleEditPassword()}
           variant="outlined" size="small">Change Password
           </Button> <br />
         <Button

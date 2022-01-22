@@ -1,4 +1,4 @@
-/* Layout */
+/* General */
 
 *,
 *::before,
@@ -11,6 +11,7 @@ body {
 }
 
 /* Layout */
+
 .main-container {
   display: flex;
   flex-direction: column;
