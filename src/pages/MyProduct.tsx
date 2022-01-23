@@ -16,7 +16,7 @@ const MyProduct = () => {
   }
 
   return (
-    <div>
+    <div className='main-container'>
       <div>
         <Button
           className='add-button m-2'
