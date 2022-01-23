@@ -30,7 +30,10 @@ function App() {
         <Route path="/productdetail" element={<ProductDetail />} />
       </Routes>
 
-      <Footer />
+        <footer className="footer">
+          <Footer />
+        </footer>
+      </div>
     </div>
   );
 }
