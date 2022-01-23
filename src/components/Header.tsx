@@ -23,7 +23,7 @@ import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
 
@@ -54,6 +54,10 @@ const Header = () => {
 
   const handleCart = () => {
     navigate("/cart");
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
   };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -122,7 +126,7 @@ const Header = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleLogin}>
           <LoginIcon />
         </IconButton>
         <p>Login</p>
@@ -182,9 +186,10 @@ const Header = () => {
 
           {!isLogin && (
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton size="large" color="inherit">
+              <IconButton size="large" color="inherit" onClick={handleLogin}>
                 <LoginIcon />
               </IconButton>
+
               <IconButton size="large" color="inherit">
                 <AppRegistrationIcon />
               </IconButton>
