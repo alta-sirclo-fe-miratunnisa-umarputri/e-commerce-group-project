@@ -60,6 +60,10 @@ const Header = () => {
     navigate("/login");
   };
 
+  const handleRegister = () => {
+    navigate("/register");
+  };
+
   const mobileMenuId = "primary-search-account-menu-mobile";
   const mobileMenuLogin = (
     <Menu
@@ -109,6 +113,7 @@ const Header = () => {
       </MenuItem>
     </Menu>
   );
+
   const mobileMenuNotLogin = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -132,7 +137,7 @@ const Header = () => {
         <p>Login</p>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleRegister}>
           <AppRegistrationIcon />
         </IconButton>
         <p>Register</p>
@@ -190,7 +195,7 @@ const Header = () => {
                 <LoginIcon />
               </IconButton>
 
-              <IconButton size="large" color="inherit">
+              <IconButton size="large" color="inherit" onClick={handleRegister}>
                 <AppRegistrationIcon />
               </IconButton>
             </Box>
