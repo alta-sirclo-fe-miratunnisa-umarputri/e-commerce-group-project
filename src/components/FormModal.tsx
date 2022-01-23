@@ -1,5 +1,6 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useContext, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -9,11 +10,16 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import Loading from "./Loading";
 import { eCommerceAxios } from "../axios";
+import AuthContext from "../context/AuthContext";
 
 const FormModal = () => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const { setIsAuth } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const location = useLocation();
+
   const emailRef = useRef<HTMLInputElement>();
   const passwordRef = useRef<HTMLInputElement>();
   const usernameRef = useRef<HTMLInputElement>();
@@ -22,17 +28,37 @@ const FormModal = () => {
 
   const isPathLogin = location.pathname === "/login";
 
-  const handleLogin = () => {
+  const email = emailRef.current?.value;
+  const password = passwordRef.current?.value;
+  const username = usernameRef.current?.value;
+  const address = addressRef.current?.value;
+  const phone = phoneRef.current?.value;
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+
+    try {
+      const { data } = await eCommerceAxios({
+        method: "POST",
+        url: "/login",
+        data: {
+          username,
+          password,
+        },
+      });
+
+      localStorage.setItem("accessToken", data.data);
+      setIsAuth(true);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+
     navigate("/");
   };
 
   const handleRegister = async () => {
-    const email = emailRef.current?.value;
-    const password = passwordRef.current?.value;
-    const username = usernameRef.current?.value;
-    const address = addressRef.current?.value;
-    const phone = phoneRef.current?.value;
-
     setIsLoading(true);
 
     try {
@@ -65,12 +91,12 @@ const FormModal = () => {
       <TextField
         autoFocus
         margin="dense"
-        id="username"
-        label="User Name"
-        type="text"
+        id="email"
+        label="Email Address"
+        type="email"
         fullWidth
         variant="standard"
-        inputRef={usernameRef}
+        inputRef={emailRef}
       />
       <TextField
         autoFocus
@@ -103,13 +129,14 @@ const FormModal = () => {
         <TextField
           autoFocus
           margin="dense"
-          id="email"
-          label="Email Address"
-          type="email"
+          id="username"
+          label="User Name"
+          type="text"
           fullWidth
           variant="standard"
-          inputRef={emailRef}
+          inputRef={usernameRef}
         />
+
         <TextField
           autoFocus
           margin="dense"

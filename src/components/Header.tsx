@@ -1,4 +1,6 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,29 +16,29 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import { useNavigate, useLocation } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import style from "./Header.module.css";
 import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
+import AuthContext from "../context/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isLogin, setIsLogin] = useState(false);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
+  const { isAuth, setIsAuth } = useContext(AuthContext);
 
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isMenuOpenMobile = Boolean(mobileMoreAnchorEl);
 
   const isShowingSearchBar =
     location.pathname === "/" || location.pathname === "/myproduct";
 
-  const handleMobileMenuClose = () => {
+  const handleMenuCloseMobile = () => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {
+  const handleMenuOpenMobile = (event: MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -64,8 +66,14 @@ const Header = () => {
     navigate("/register");
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    setIsAuth(false);
+    navigate("/");
+  };
+
   const mobileMenuId = "primary-search-account-menu-mobile";
-  const mobileMenuLogin = (
+  const menuAfterLoginMobile = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
@@ -78,8 +86,8 @@ const Header = () => {
         vertical: "top",
         horizontal: "right",
       }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
+      open={isMenuOpenMobile}
+      onClose={handleMenuCloseMobile}
     >
       <MenuItem>
         <IconButton size="large" color="inherit" onClick={handleHome}>
@@ -106,7 +114,7 @@ const Header = () => {
         <p>Cart</p>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleLogout}>
           <LogoutIcon />
         </IconButton>
         <p>Logout</p>
@@ -114,7 +122,7 @@ const Header = () => {
     </Menu>
   );
 
-  const mobileMenuNotLogin = (
+  const menuBeforeLoginMobile = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
@@ -127,8 +135,8 @@ const Header = () => {
         vertical: "top",
         horizontal: "right",
       }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
+      open={isMenuOpenMobile}
+      onClose={handleMenuCloseMobile}
     >
       <MenuItem>
         <IconButton size="large" color="inherit" onClick={handleLogin}>
@@ -145,61 +153,63 @@ const Header = () => {
     </Menu>
   );
 
+  const menuAfterLogin = (
+    <Box sx={{ display: { xs: "none", md: "flex" } }}>
+      <IconButton size="large" color="inherit" onClick={handleHome}>
+        <HomeIcon />
+      </IconButton>
+      <IconButton size="large" color="inherit" onClick={handleMyProduct}>
+        <StoreIcon />
+      </IconButton>
+      <IconButton size="large" color="inherit" onClick={handleProfile}>
+        <AccountCircle />
+      </IconButton>
+      <IconButton size="large" color="inherit" onClick={handleCart}>
+        <ShoppingCartIcon />
+      </IconButton>
+      <IconButton size="large" color="inherit" onClick={handleLogout}>
+        <LogoutIcon />
+      </IconButton>
+    </Box>
+  );
+
+  const menuBeforeLogin = (
+    <Box sx={{ display: { xs: "none", md: "flex" } }}>
+      <IconButton size="large" color="inherit" onClick={handleLogin}>
+        <LoginIcon />
+      </IconButton>
+
+      <IconButton size="large" color="inherit" onClick={handleRegister}>
+        <AppRegistrationIcon />
+      </IconButton>
+    </Box>
+  );
+
+  const searchBar = (
+    <Search>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase
+        placeholder="Search…"
+        inputProps={{ "aria-label": "search" }}
+      />
+    </Search>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <img alt="logo" src={logo} className={style.logo} />
 
-          {isShowingSearchBar && (
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          )}
+          {isShowingSearchBar && searchBar}
 
           <Box sx={{ flexGrow: 1 }} />
 
-          {isLogin && (
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton size="large" color="inherit" onClick={handleHome}>
-                <HomeIcon />
-              </IconButton>
-              <IconButton
-                size="large"
-                color="inherit"
-                onClick={handleMyProduct}
-              >
-                <StoreIcon />
-              </IconButton>
-              <IconButton size="large" color="inherit" onClick={handleProfile}>
-                <AccountCircle />
-              </IconButton>
-              <IconButton size="large" color="inherit" onClick={handleCart}>
-                <ShoppingCartIcon />
-              </IconButton>
-              <IconButton size="large" color="inherit">
-                <LogoutIcon />
-              </IconButton>
-            </Box>
-          )}
+          {isAuth && menuAfterLogin}
 
-          {!isLogin && (
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton size="large" color="inherit" onClick={handleLogin}>
-                <LoginIcon />
-              </IconButton>
-
-              <IconButton size="large" color="inherit" onClick={handleRegister}>
-                <AppRegistrationIcon />
-              </IconButton>
-            </Box>
-          )}
+          {!isAuth && menuBeforeLogin}
 
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -207,7 +217,7 @@ const Header = () => {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              onClick={handleMenuOpenMobile}
               color="inherit"
             >
               <MoreIcon />
@@ -216,7 +226,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
 
-      {isLogin ? mobileMenuLogin : mobileMenuNotLogin}
+      {isAuth ? menuAfterLoginMobile : menuBeforeLoginMobile}
     </Box>
   );
 };
