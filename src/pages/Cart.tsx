@@ -28,7 +28,6 @@ const Cart = () => {
             <h6 className="card-text">item.name</h6>
             <h3 className="card-title">item.price</h3>
             <Button
-              className='button3' 
               onClick={() => handleRemoveItem()}
               variant="outlined" size="small" color="error">Remove
             </Button>
@@ -44,7 +43,6 @@ const Cart = () => {
             <h6 className="card-text">item.name</h6>
             <h3 className="card-title">item.price</h3>
             <Button
-              className='button3' 
               onClick={() => handleRemoveItem()}
               variant="outlined" size="small" color="error">Remove
             </Button>
@@ -60,7 +58,6 @@ const Cart = () => {
             <h6 className="card-text">item.name</h6>
             <h3 className="card-title">item.price</h3>
             <Button
-              className='button3' 
               onClick={() => handleRemoveItem()}
               variant="outlined" size="small" color="error">Remove
             </Button>
@@ -74,7 +71,7 @@ const Cart = () => {
           </Button>
         </div>
       </div>
-      <div className='second-column'>
+      <div className='second-column m-2'>
         order history
         <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil nulla delectus perspiciatis aspernatur maxime inventore iure totam veniam excepturi? Consequatur excepturi asperiores exercitationem nostrum? Omnis quam neque qui ut facere!</h1>
         <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis voluptatibus laudantium voluptate dolore perspiciatis nemo voluptates tempora repellat fuga, mollitia eos veritatis delectus molestias eveniet harum consequuntur? Tempora, nisi eligendi!</h1>
