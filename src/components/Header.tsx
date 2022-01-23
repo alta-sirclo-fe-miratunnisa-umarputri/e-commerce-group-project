@@ -1,4 +1,6 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,18 +16,18 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import { useNavigate, useLocation } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import style from "./Header.module.css";
 import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
+import AuthContext from "../context/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isLogin, setIsLogin] = useState(false);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
+  const { isAuth, setIsAuth } = useContext(AuthContext);
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -62,6 +64,12 @@ const Header = () => {
 
   const handleRegister = () => {
     navigate("/register");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    setIsAuth(false);
+    navigate("/");
   };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -106,7 +114,7 @@ const Header = () => {
         <p>Cart</p>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" onClick={handleLogout}>
           <LogoutIcon />
         </IconButton>
         <p>Logout</p>
@@ -165,7 +173,7 @@ const Header = () => {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          {isLogin && (
+          {isAuth && (
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton size="large" color="inherit" onClick={handleHome}>
                 <HomeIcon />
@@ -183,13 +191,13 @@ const Header = () => {
               <IconButton size="large" color="inherit" onClick={handleCart}>
                 <ShoppingCartIcon />
               </IconButton>
-              <IconButton size="large" color="inherit">
+              <IconButton size="large" color="inherit" onClick={handleLogout}>
                 <LogoutIcon />
               </IconButton>
             </Box>
           )}
 
-          {!isLogin && (
+          {!isAuth && (
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton size="large" color="inherit" onClick={handleLogin}>
                 <LoginIcon />
@@ -216,7 +224,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
 
-      {isLogin ? mobileMenuLogin : mobileMenuNotLogin}
+      {isAuth ? mobileMenuLogin : mobileMenuNotLogin}
     </Box>
   );
 };
