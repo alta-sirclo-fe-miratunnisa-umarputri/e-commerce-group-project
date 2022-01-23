@@ -15,18 +15,22 @@ function App() {
     <div>
       <Header />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<FormModal />} />
-        <Route path="/register" element={<FormModal />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/order" element={<Order />} />
-        <Route path="/myproduct" element={<MyProduct />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/productdetail" element={<ProductDetail />} />
-      </Routes>
+      <div className="content-footer">
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/myproduct" element={<MyProduct />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/productdetail" element={<ProductDetail />} />
+          </Routes>
+        </div>
 
-      <Footer />
+        <footer className="footer">
+          <Footer />
+        </footer>
+      </div>
     </div>
   );
 }
