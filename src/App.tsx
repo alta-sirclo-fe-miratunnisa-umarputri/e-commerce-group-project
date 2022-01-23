@@ -19,6 +19,8 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<FormModal />} />
+            <Route path="/register" element={<FormModal />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/order" element={<Order />} />
             <Route path="/myproduct" element={<MyProduct />} />
