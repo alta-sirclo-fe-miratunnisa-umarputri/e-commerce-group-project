@@ -78,7 +78,7 @@ a:active {
 @media (min-width: 768px) {
   .main-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 55% 45%;
   }
 
   .button-container {
@@ -107,7 +107,7 @@ a:active {
 @media (min-width: 992px) {
   .main-container {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: 70% 30%;
   }
 
   .photo-container {
@@ -128,16 +128,13 @@ a:active {
 
   .button1 {
     grid-area: 1/1/1/1;
-    height: 45px;
   }
   
   .button2 {
     grid-area: 2/1/2/1;
-    height: 45px;
   }
   
   .button3 {
     grid-area: 3/1/3/1;
-    height: 45px;
   }
 }
