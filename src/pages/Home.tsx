@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Card,
   CardActions,
@@ -8,19 +11,25 @@ import {
   Button,
   Container,
 } from "@mui/material";
-import { useState } from "react";
+
+import AuthContext from "../context/AuthContext";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const Home = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
+  const { isAuth } = useContext(AuthContext);
 
   const handleDetail = () => {
-    console.log("detail");
+    navigate("/productdetail");
   };
 
   const handleAddToCart = () => {
-    console.log("add to cart");
+    if (!isAuth) {
+      navigate("/login");
+    } else {
+      console.log("add to cart");
+    }
   };
 
   return (
