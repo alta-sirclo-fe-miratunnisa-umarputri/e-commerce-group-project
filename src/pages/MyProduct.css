@@ -12,11 +12,11 @@ body {
 
 /* Layout */
 
-.add-button {
+.myproduct-add-button {
   display: flex;
 }
 
-.image-sizing {
+.myproduct-image-sizing {
   width: 30vw;
   height: 20vw;
 }
@@ -43,29 +43,29 @@ a:active {
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-  .main-container {
+  .myproduct-main-container {
     margin-left: 7vw;
     margin-right: 7vw;
   }
 
-  .image-sizing {
+  .myproduct-image-sizing {
     width: 24vw;
     height: 16vw;
   }
 
-  .card-title {
+  .myproduct-card-title {
     margin-bottom: 2.5rem;
   }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-  .main-container {
+  .myproduct-main-container {
     margin-left: 10vw;
     margin-right: 10vw;
   }
 
-  .image-sizing {
+  .myproduct-image-sizing {
     width: 12vw;
     height: 8vw;
   }

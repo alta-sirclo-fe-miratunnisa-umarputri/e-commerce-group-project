@@ -25,8 +25,7 @@ const Cart = () => {
     axios
       .get(URL, config)
       .then((res) => {
-        const { data } = res.data;
-        setCarts(data);
+        setCarts(res.data.data);
       })
       .catch((err) => {
         console.log(err)
@@ -39,17 +38,31 @@ const Cart = () => {
     navigate("/order");
   }
 
-  const handleRemoveItem = () => {
-    navigate("/cart");
+  const handleRemoveItem = (item: any) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+    };
+    axios
+      .delete(URL + `/${item.product.id}` + "", config)
+      .then((res) => {
+        fetchData();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(
+      );
   }
 
   if(carts.length == 0) {
     return (
-      <div className='main-container'>
-        <div className='first-column m-2 fixed-content'>
+      <div className='cart-main-container'>
+        <div className='cart-first-column m-2'>
           Your cart is empty ..
         </div>
-        <div className='second-column m-2'>
+        <div className='cart-second-column m-2'>
           order history
           <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum perspiciatis fugiat, laudantium hic ipsum aliquam adipisci in quis, eveniet corrupti ipsam minima corporis provident impedit voluptatum maxime eos voluptas aliquid.</h1>
         </div>
@@ -57,20 +70,22 @@ const Cart = () => {
     )
   } else {
     return (
-      <div className='main-container'>
-        <div className='first-column fixed-content'>
-          {carts.map((product: any) => (
-            <div className="card flex-row flex-wrap m-2">
+      <div className='cart-main-container'>
+        <div className='cart-first-column'>
+          {carts.map((item: any, index) => (
+            <div
+              key={index}
+              className="card flex-row flex-wrap m-2">
               <div className="card-header border-0">
                 <img 
-                  className="image-sizing"
+                  className="cart-image-sizing"
                   src={Photo} alt="" />
               </div>
               <div className="card-block px-2">
-                <h6 className="card-text">{product.name}</h6>
-                <h3 className="card-title">{product.harga}</h3>
+                <h6 className="card-text">{item.product.name}</h6>
+                <h3 className="cart-card-title">{item.product.harga}</h3>
                 <Button
-                  onClick={() => handleRemoveItem()}
+                  onClick={() => handleRemoveItem(item)}
                   variant="outlined" size="small" color="error">Remove
                 </Button>
               </div>
@@ -78,13 +93,13 @@ const Cart = () => {
           ))}
           <div>
             <Button
-              className='add-button m-2'
+              className='cart-add-button m-2'
               onClick={() => handleConfirmItem()}
               variant="contained" size="small">Confirm
             </Button>
           </div>
         </div>
-        <div className='second-column m-2'>
+        <div className='cart-second-column m-2'>
           order history
           <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum perspiciatis fugiat, laudantium hic ipsum aliquam adipisci in quis, eveniet corrupti ipsam minima corporis provident impedit voluptatum maxime eos voluptas aliquid.</h1>
         </div>

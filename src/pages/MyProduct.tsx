@@ -16,10 +16,10 @@ const MyProduct = () => {
   }
 
   return (
-    <div className='main-container'>
+    <div className='myproduct-main-container'>
       <div>
         <Button
-          className='add-button m-2'
+          className='myproduct-add-button m-2'
           onClick={() => handleAddItem()}
           variant="contained" size="small">Add Item
         </Button>
@@ -27,14 +27,13 @@ const MyProduct = () => {
       <div className="card flex-row flex-wrap m-2">
         <div className="card-header border-0">
           <img 
-            className="image-sizing"
+            className="myproduct-image-sizing"
             src={Photo} alt="" />
         </div>
         <div className="card-block px-2">
           <h6 className="card-text">item.name</h6>
-          <h3 className="card-title">item.price</h3>
+          <h3 className="myproduct-card-title">item.price</h3>
           <Button
-            className='button3' 
             onClick={() => handleRemoveItem()}
             variant="outlined" size="small" color="error">Remove
           </Button>
@@ -43,14 +42,13 @@ const MyProduct = () => {
       <div className="card flex-row flex-wrap m-2">
         <div className="card-header border-0">
           <img 
-            className="image-sizing"
+            className="myproduct-image-sizing"
             src={Photo} alt="" />
         </div>
         <div className="card-block px-2">
           <h6 className="card-text">item.name</h6>
-          <h3 className="card-title">item.price</h3>
+          <h3 className="myproduct-card-title">item.price</h3>
           <Button
-            className='button3' 
             onClick={() => handleRemoveItem()}
             variant="outlined" size="small" color="error">Remove
           </Button>
@@ -59,14 +57,13 @@ const MyProduct = () => {
       <div className="card flex-row flex-wrap m-2">
         <div className="card-header border-0">
           <img 
-            className="image-sizing"
+            className="myproduct-image-sizing"
             src={Photo} alt="" />
         </div>
         <div className="card-block px-2">
           <h6 className="card-text">item.name</h6>
-          <h3 className="card-title">item.price</h3>
+          <h3 className="myproduct-card-title">item.price</h3>
           <Button
-            className='button3' 
             onClick={() => handleRemoveItem()}
             variant="outlined" size="small" color="error">Remove
           </Button>

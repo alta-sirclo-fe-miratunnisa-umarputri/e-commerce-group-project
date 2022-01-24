@@ -50,12 +50,12 @@ const Profile = () => {
   }
 
   return (
-    <div className='main-container'>
-      <div className='photo-container'>
+    <div className='profile-main-container'>
+      <div className='profile-photo-container'>
         <img
           src={ ProfileImage } width="200px" height="200px" alt=""/>
       </div>
-      <div className='table-container'>
+      <div className='profile-table-container'>
         <table>
           <tbody>
             <tr>
@@ -85,19 +85,19 @@ const Profile = () => {
           </tbody>
         </table>
       </div>
-      <div className='button-container'>
+      <div className='profile-button-container'>
         <Button 
-          className='button1'
+          className='profile-button1'
           onClick={() => handleEditProfile()}
           variant="outlined" size="small">Edit Profile
           </Button> <br />
         <Button 
-          className='button2'
+          className='profile-button2'
           onClick={() => handleEditPassword()}
           variant="outlined" size="small">Change Password
           </Button> <br />
         <Button
-          className='button3' 
+          className='profile-button3' 
           onClick={() => handleDeleteAccount()}
           variant="outlined" size="small" color="error">Delete Account
           </Button>
