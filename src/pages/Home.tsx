@@ -6,16 +6,16 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Grid,
   Typography,
   Button,
   Container,
+  Box,
 } from "@mui/material";
+import { LoadingButton, Masonry } from "@mui/lab";
 
 import AuthContext from "../context/AuthContext";
 import { eCommerceAxios } from "../axios";
 import Loading from "../components/Loading";
-import { LoadingButton } from "@mui/lab";
 
 interface Product {
   category_id: number;
@@ -111,11 +111,15 @@ const Home = () => {
         All Products
       </Typography>
 
-      <Grid container spacing={3}>
+      <Masonry columns={{ xs: 1, sm: 3, md: 4 }} spacing={2}>
         {allProducts.map((product) => (
-          <Grid item key={product.id} xs={12} sm={6} md={3}>
+          <Box key={product.id}>
             <Card
-              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
               <CardMedia component="img" image={product.gambar} alt="random" />
 
@@ -145,9 +149,9 @@ const Home = () => {
                 )}
               </CardActions>
             </Card>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Masonry>
     </Container>
   );
 };
