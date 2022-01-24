@@ -1,45 +1,69 @@
-import { Container, Grid, Button, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { LoadingButton } from "@mui/lab";
+import { Container, Grid, Typography } from "@mui/material";
 
 import { eCommerceAxios } from "../axios";
+import Loading from "../components/Loading";
+import AuthContext from "../context/AuthContext";
 import { Product } from "../interfaces/Product";
 import style from "./ProductDetail.module.css";
 
 const ProductDetail = () => {
-  const { id } = useParams();
   const [details, setDetails] = useState({} as Product);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const { isAuth } = useContext(AuthContext);
+
+  const accessToken = localStorage.getItem("accessToken");
+
+  const handleOrder = async () => {
+    if (!isAuth) {
+      navigate("/login");
+      return;
+    }
+
+    setIsLoadingButton(true);
+    try {
+      await eCommerceAxios({
+        method: "POST",
+        headers: { Authorization: `Bearer ${accessToken}` },
+        url: "/carts",
+        data: { product_id: parseInt(id!), qty: 1, subtotal: details.harga },
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoadingButton(false);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+
       try {
         const { data } = await eCommerceAxios({
           method: "GET",
           url: `/products/${id}`,
         });
 
-        console.log("data =>", data.data);
         setDetails(data.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  console.log("detail", details);
-
-  return (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 2,
-      }}
-    >
+  const display = (
+    <Fragment>
       <Typography variant="h3" gutterBottom mt={3} textAlign="center">
         Product Detail
       </Typography>
@@ -65,11 +89,32 @@ const ProductDetail = () => {
             Rp{details.harga && details.harga}
           </Typography>
 
-          <Button variant="contained" sx={{ marginTop: 3 }} fullWidth>
+          <LoadingButton
+            onClick={handleOrder}
+            loading={isLoadingButton}
+            loadingIndicator="Loading..."
+            variant="contained"
+            sx={{ marginTop: 3 }}
+            fullWidth
+          >
             Order
-          </Button>
+          </LoadingButton>
         </Grid>
       </Grid>
+    </Fragment>
+  );
+
+  return (
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 2,
+      }}
+    >
+      {isLoading ? <Loading /> : display}
     </Container>
   );
 };
