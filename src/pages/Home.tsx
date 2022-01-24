@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import {
@@ -42,7 +42,7 @@ const Home = () => {
       await eCommerceAxios({
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
-        url: "carts",
+        url: "/carts",
         data: { product_id: id, qty: 1, subtotal: price },
       });
     } catch (err) {
@@ -84,18 +84,8 @@ const Home = () => {
     </LoadingButton>
   );
 
-  return (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 2,
-      }}
-    >
-      {isLoading && <Loading />}
-
+  const display = (
+    <Fragment>
       <Typography variant="h3" gutterBottom mt={3} textAlign="center">
         All Products
       </Typography>
@@ -141,6 +131,20 @@ const Home = () => {
           </Box>
         ))}
       </Masonry>
+    </Fragment>
+  );
+
+  return (
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 2,
+      }}
+    >
+      {isLoading ? <Loading /> : display}
     </Container>
   );
 };
