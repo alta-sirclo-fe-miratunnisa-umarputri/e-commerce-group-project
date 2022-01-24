@@ -16,15 +16,16 @@ import { LoadingButton, Masonry } from "@mui/lab";
 import AuthContext from "../context/AuthContext";
 import { eCommerceAxios } from "../axios";
 import Loading from "../components/Loading";
-import { Product } from "../interfaces/Product";
+import AllProductsContext from "../context/AllProductsContext";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [buyingId, setBuyingId] = useState<number>(0);
 
+  const { setAllProducts, showAllProducts, setShowAllProducts } =
+    useContext(AllProductsContext);
   const { isAuth } = useContext(AuthContext);
 
   const accessToken = localStorage.getItem("accessToken");
@@ -64,6 +65,7 @@ const Home = () => {
         });
 
         setAllProducts(data.data);
+        setShowAllProducts(data.data);
       } catch (err) {
         console.log(err);
       } finally {
@@ -91,7 +93,7 @@ const Home = () => {
       </Typography>
 
       <Masonry columns={{ xs: 1, sm: 3, md: 4 }} spacing={2}>
-        {allProducts.map((product) => (
+        {showAllProducts.map((product) => (
           <Box key={product.id}>
             <Card
               sx={{
