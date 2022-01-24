@@ -1,35 +1,68 @@
 import { Container, Grid, Button, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-import dummyImg from "../assets/logo.png";
+import { eCommerceAxios } from "../axios";
+import { Product } from "../interfaces/Product";
+import style from "./ProductDetail.module.css";
 
 const ProductDetail = () => {
+  const { id } = useParams();
+  const [details, setDetails] = useState({} as Product);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await eCommerceAxios({
+          method: "GET",
+          url: `/products/${id}`,
+        });
+
+        console.log("data =>", data.data);
+        setDetails(data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log("detail", details);
+
   return (
-    <Container sx={{ marginTop: "100px" }}>
-      <Typography variant="h4" fontWeight={500} marginBottom={2} gutterBottom>
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 2,
+      }}
+    >
+      <Typography variant="h3" gutterBottom mt={3} textAlign="center">
         Product Detail
       </Typography>
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={5}>
-          <img src={dummyImg} alt="item" />
-        </Grid>
+      <Grid container spacing={6} mt={1}>
         <Grid item xs={12} md={7}>
+          <img
+            src={details.gambar && details.gambar}
+            alt="item"
+            className={style.image}
+          />
+        </Grid>
+        <Grid item xs={12} md={5}>
           <Typography variant="h6" fontWeight={500} gutterBottom>
-            {`Nama Product`}
+            {details.name && details.name}
           </Typography>
 
           <Typography variant="subtitle1" fontWeight={300} gutterBottom>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            iaculis nulla id maximus semper. In blandit semper orci et porta.
-            Vestibulum id lacus ornare, vehicula quam non, convallis erat. Proin
-            odio nulla, varius vel felis eu, scelerisque lacinia lorem. Proin
-            ultrices ultrices magna sit amet porta. Praesent lacus tellus,
-            sagittis id nunc consectetur, bibendum imperdiet lacus. Donec eu
-            velit felis.
+            {details.deskripsi && details.deskripsi}
           </Typography>
 
           <Typography variant="h5" fontWeight={400}>
-            Rpxxxxx
+            Rp{details.harga && details.harga}
           </Typography>
 
           <Button variant="contained" sx={{ marginTop: 3 }} fullWidth>
