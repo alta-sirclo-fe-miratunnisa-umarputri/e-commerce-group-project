@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import {
   Card,
@@ -16,14 +16,7 @@ import { LoadingButton, Masonry } from "@mui/lab";
 import AuthContext from "../context/AuthContext";
 import { eCommerceAxios } from "../axios";
 import Loading from "../components/Loading";
-
-interface Product {
-  category_id: number;
-  gambar: string;
-  harga: number;
-  id: number;
-  name: string;
-}
+import { Product } from "../interfaces/Product";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -35,10 +28,6 @@ const Home = () => {
   const { isAuth } = useContext(AuthContext);
 
   const accessToken = localStorage.getItem("accessToken");
-
-  const handleDetail = () => {
-    navigate("/productdetail");
-  };
 
   const handleAddToCart = async (id: number, price: number) => {
     setBuyingId(id);
@@ -133,9 +122,9 @@ const Home = () => {
               </CardContent>
 
               <CardActions sx={{ display: "flex", justifyContent: "end" }}>
-                <Button size="small" onClick={handleDetail}>
-                  Detail
-                </Button>
+                <Link to={`/productdetail/${product.id}`}>
+                  <Button size="small">Detail</Button>
+                </Link>
 
                 {buyingId === product.id ? (
                   loadingAddToCartButton
