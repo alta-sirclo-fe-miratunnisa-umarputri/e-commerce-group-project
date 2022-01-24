@@ -12,9 +12,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Profile from "./pages/Profile";
 import AuthContext from "./context/AuthContext";
 
-import EditProfile from "./pages/EditProfile";
-import EditPassword from "./pages/EditPassword";
-import AddItem from "./pages/AddItem";
+// import EditProfile from "./pages/EditProfile";
+// import EditPassword from "./pages/EditPassword";
+// import AddItem from "./pages/AddItem";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -45,9 +45,9 @@ function App() {
               <Route path="/myproduct" element={<MyProduct />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/productdetail" element={<ProductDetail />} />
-              <Route path="/editprofile" element={<EditProfile />} />
+              {/* <Route path="/editprofile" element={<EditProfile />} />
               <Route path="/editpassword" element={<EditPassword />} />
-              <Route path="/additem" element={<AddItem />} />
+              <Route path="/additem" element={<AddItem />} /> */}
             </Routes>
           </div>
 
