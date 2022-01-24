@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -17,7 +17,6 @@ import EditProfile from "./pages/EditProfile";
 import EditPassword from "./pages/EditPassword";
 import AddItem from "./pages/AddItem";
 import { Product } from "./interfaces/Product";
-import RequireAuth from "./components/RequireAuth";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -54,15 +53,34 @@ function App() {
                 <Route path="/login" element={<FormModal />} />
                 <Route path="/register" element={<FormModal />} />
                 <Route path="/productdetail/:id" element={<ProductDetail />} />
-                <Route element={<RequireAuth />}>
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/order" element={<Order />} />
-                  <Route path="/myproduct" element={<MyProduct />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/editprofile" element={<EditProfile />} />
-                  <Route path="/editpassword" element={<EditPassword />} />
-                  <Route path="/additem" element={<AddItem />} />
-                </Route>
+                <Route
+                  path="/cart"
+                  element={isAuth ? <Cart /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/order"
+                  element={isAuth ? <Order /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/myproduct"
+                  element={isAuth ? <MyProduct /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/profile"
+                  element={isAuth ? <Profile /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/editprofile"
+                  element={isAuth ? <EditProfile /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/editpassword"
+                  element={isAuth ? <EditPassword /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/additem"
+                  element={isAuth ? <AddItem /> : <Navigate to="/login" />}
+                />
               </Routes>
             </div>
 
