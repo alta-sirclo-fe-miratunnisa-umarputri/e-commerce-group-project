@@ -199,7 +199,7 @@ const Header = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: "#878787" }}>
         <Toolbar>
           <img alt="logo" src={logo} className={style.logo} />
 
