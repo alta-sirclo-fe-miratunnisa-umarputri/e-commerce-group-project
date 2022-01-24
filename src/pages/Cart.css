@@ -18,8 +18,14 @@ body {
 }
 
 .cart-image-sizing {
-  width: 30vw;
+  width: 25vw;
   height: 20vw;
+}
+
+.cart-right-alignment {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
 }
 
 /* Styling */

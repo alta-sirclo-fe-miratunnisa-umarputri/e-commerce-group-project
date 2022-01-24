@@ -1,16 +1,18 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Photo from '../assets/app-store.png';
 import './Cart.css';
 import axios from 'axios';
+import PriceContext from '../context/PriceContext';
 
 const Cart = () => {
   const navigate = useNavigate();
   const URL = "http://3.0.145.2/carts";
   const accessToken = localStorage.getItem("accessToken");
   const [carts, setCarts] = useState<any[]>([]);
+  let price = useContext(PriceContext);
   
   React.useEffect(() => {
     fetchData()
@@ -56,6 +58,13 @@ const Cart = () => {
       );
   }
 
+  let total_price = 0;
+  for (let object of carts) {
+    total_price = total_price + object.product.harga;
+  }
+  price = total_price;
+
+
   if(carts.length == 0) {
     return (
       <div className='cart-main-container'>
@@ -83,7 +92,7 @@ const Cart = () => {
               </div>
               <div className="card-block px-2">
                 <h6 className="card-text">{item.product.name}</h6>
-                <h3 className="cart-card-title">{item.product.harga}</h3>
+                <h3 className="cart-card-title">Rp {item.product.harga}</h3>
                 <Button
                   onClick={() => handleRemoveItem(item)}
                   variant="outlined" size="small" color="error">Remove
@@ -91,7 +100,9 @@ const Cart = () => {
               </div>
             </div>
           ))}
-          <div>
+          <div className='cart-right-alignment m-2'>
+            <p>Total Pembayaran:</p><br />
+            <p>Rp {price}</p><br />
             <Button
               className='cart-add-button m-2'
               onClick={() => handleConfirmItem()}
