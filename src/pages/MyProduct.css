@@ -1,0 +1,72 @@
+/* General */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* Layout */
+
+.add-button {
+  display: flex;
+}
+
+.image-sizing {
+  width: 30vw;
+  height: 20vw;
+}
+
+/* Styling */
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+/* Media Responsiveness
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .main-container {
+    margin-left: 7vw;
+    margin-right: 7vw;
+  }
+
+  .image-sizing {
+    width: 24vw;
+    height: 16vw;
+  }
+
+  .card-title {
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .main-container {
+    margin-left: 10vw;
+    margin-right: 10vw;
+  }
+
+  .image-sizing {
+    width: 12vw;
+    height: 8vw;
+  }
+}
