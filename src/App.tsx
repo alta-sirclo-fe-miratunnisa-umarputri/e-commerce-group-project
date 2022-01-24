@@ -17,6 +17,7 @@ import EditProfile from "./pages/EditProfile";
 import EditPassword from "./pages/EditPassword";
 import AddItem from "./pages/AddItem";
 import { Product } from "./interfaces/Product";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -52,14 +53,16 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<FormModal />} />
                 <Route path="/register" element={<FormModal />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/order" element={<Order />} />
-                <Route path="/myproduct" element={<MyProduct />} />
-                <Route path="/profile" element={<Profile />} />
                 <Route path="/productdetail/:id" element={<ProductDetail />} />
-                <Route path="/editprofile" element={<EditProfile />} />
-                <Route path="/editpassword" element={<EditPassword />} />
-                <Route path="/additem" element={<AddItem />} />
+                <Route element={<RequireAuth />}>
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/order" element={<Order />} />
+                  <Route path="/myproduct" element={<MyProduct />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/editprofile" element={<EditProfile />} />
+                  <Route path="/editpassword" element={<EditPassword />} />
+                  <Route path="/additem" element={<AddItem />} />
+                </Route>
               </Routes>
             </div>
 
