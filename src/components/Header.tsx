@@ -1,4 +1,4 @@
-import { useState, MouseEvent, useContext } from "react";
+import { useState, MouseEvent, useContext, ChangeEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
@@ -21,12 +21,15 @@ import logo from "../assets/logo.png";
 import style from "./Header.module.css";
 import { Search, SearchIconWrapper, StyledInputBase } from "./HeaderStyle";
 import AuthContext from "../context/AuthContext";
+import AllProductsContext from "../context/AllProductsContext";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
+
+  const { allProducts, setShowAllProducts } = useContext(AllProductsContext);
   const { isAuth, setIsAuth } = useContext(AuthContext);
 
   const isMenuOpenMobile = Boolean(mobileMoreAnchorEl);
@@ -70,6 +73,16 @@ const Header = () => {
     localStorage.removeItem("accessToken");
     setIsAuth(false);
     navigate("/");
+  };
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+
+    const searchedProducts = allProducts.filter((product) =>
+      product.name.includes(input)
+    );
+
+    setShowAllProducts(searchedProducts);
   };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -193,6 +206,7 @@ const Header = () => {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
+        onChange={handleSearch}
       />
     </Search>
   );
