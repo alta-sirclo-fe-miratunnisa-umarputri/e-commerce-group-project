@@ -60,7 +60,7 @@ const ProductDetail = () => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   const display = (
     <Fragment>

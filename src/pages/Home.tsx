@@ -74,7 +74,7 @@ const Home = () => {
     };
 
     fetchData();
-  }, []);
+  }, [setAllProducts, setShowAllProducts]);
 
   const loadingAddToCartButton = (
     <LoadingButton
