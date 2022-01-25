@@ -1,4 +1,4 @@
-This project was deployed [here](group1-ecommerce.surge.sh)
+This project was deployed at group1-ecommerce.surge.sh
 
 # Getting Started with Create React App
 
