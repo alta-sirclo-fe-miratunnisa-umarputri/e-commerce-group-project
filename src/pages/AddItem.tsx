@@ -125,7 +125,7 @@ const AddItem = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleAdd}>Add Item</Button>
+          <Button onClick={() => handleAdd()}>Add Item</Button>
         </DialogActions>
       </Dialog>
     </div>

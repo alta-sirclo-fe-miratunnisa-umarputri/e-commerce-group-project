@@ -2,9 +2,14 @@ import * as React from 'react';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import { Typography } from '@mui/material';
 import Photo from '../assets/app-store.png';
 import './Cart.css';
 import axios from 'axios';
+import { eCommerceAxios } from "../axios";
 import PriceContext from '../context/PriceContext';
 
 const Cart = () => {
@@ -40,22 +45,33 @@ const Cart = () => {
     navigate("/order");
   }
 
-  const handleRemoveItem = (item: any) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
+  const handleRemoveItem = async(item: any) => {
+    try {
+      await eCommerceAxios({
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${accessToken}` },
+        url: `/carts/1`
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      fetchData();
     };
-    axios
-      .delete(URL + `/${item.product.id}` + "", config)
-      .then((res) => {
-        fetchData();
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-      .finally(
-      );
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer ${accessToken}`
+    //   },
+    // };
+    // axios
+    //   .delete(URL + `/${item.product.id}` + "", config)
+    //   .then((res) => {
+    //     fetchData();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    //   .finally(
+    //   );
   }
 
   let total_price = 0;
@@ -63,22 +79,56 @@ const Cart = () => {
     total_price = total_price + object.product.harga;
   }
   price = total_price;
+  let id_set = new Set();
+  for (let object of carts) {
+    id_set.add(object.product.id);
+  }
 
 
   if(carts.length == 0) {
     return (
+      <div>
+        <Typography variant="h3" gutterBottom mt={3} textAlign="center">
+          Cart
+        </Typography>
       <div className='cart-main-container'>
         <div className='cart-first-column m-2'>
           Your cart is empty ..
         </div>
         <div className='cart-second-column m-2'>
           order history
-          <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum perspiciatis fugiat, laudantium hic ipsum aliquam adipisci in quis, eveniet corrupti ipsam minima corporis provident impedit voluptatum maxime eos voluptas aliquid.</h1>
+          <Box
+            sx={{
+              width: 300,
+              height: 300,
+              backgroundColor: 'lightgrey',
+              flexgrow: 1
+            }}>
+            <Grid container spacing={1}>
+              <Grid item xs={4}>
+                <img src={Photo} width="100px"/>
+              </Grid>
+              <Grid item xs={4}>
+                <img src={Photo} width="100px"/>
+              </Grid>
+              <Grid item xs={4}>
+                <img src={Photo} width="100px"/>
+              </Grid>
+              <Grid item xs={4}>
+                <img src={Photo} width="100px"/>
+              </Grid>
+            </Grid>
+          </Box>
         </div>
-    </div>
+        </div>
+      </div>
     )
   } else {
     return (
+      <div>
+        <Typography variant="h3" gutterBottom mt={3} textAlign="center">
+          Cart
+        </Typography>
       <div className='cart-main-container'>
         <div className='cart-first-column'>
           {carts.map((item: any, index) => (
@@ -101,6 +151,8 @@ const Cart = () => {
             </div>
           ))}
           <div className='cart-right-alignment m-2'>
+            <p>Jenis Barang:</p><br />
+            <p>{id_set.size}</p><br />
             <p>Total Pembayaran:</p><br />
             <p>Rp {price}</p><br />
             <Button
@@ -112,8 +164,30 @@ const Cart = () => {
         </div>
         <div className='cart-second-column m-2'>
           order history
-          <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum perspiciatis fugiat, laudantium hic ipsum aliquam adipisci in quis, eveniet corrupti ipsam minima corporis provident impedit voluptatum maxime eos voluptas aliquid.</h1>
+          <Box
+            sx={{
+              width: 300,
+              height: 300,
+              backgroundColor: 'lightgrey',
+              flexgrow: 1
+            }}>
+            <Grid container spacing={1}>
+              <Grid item xs={4}>
+                <img src={Photo} width="100px"/>
+              </Grid>
+              <Grid item xs={4}>
+                <img src={Photo} width="100px"/>
+              </Grid>
+              <Grid item xs={4}>
+                <img src={Photo} width="100px"/>
+              </Grid>
+              <Grid item xs={4}>
+                <img src={Photo} width="100px"/>
+              </Grid>
+            </Grid>
+          </Box>
         </div>
+      </div>
       </div>
     )
   }

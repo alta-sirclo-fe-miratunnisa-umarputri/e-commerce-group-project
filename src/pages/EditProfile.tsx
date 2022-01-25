@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { eCommerceAxios } from "../axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -8,11 +9,26 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
+
+export interface profile {
+  id?: number;
+  username: string;
+  email: string;
+  address: string;
+  phone: string;
+}
+
 const EditProfile = () => {
   const navigate = useNavigate();
   const URL = "http://3.0.145.2/users";
   const accessToken = localStorage.getItem("accessToken");
-  const [profile, setProfile] = useState<any[]>([]);
+  const [profile, setProfile] = useState({
+    id: "",
+    username: "",
+    email: "",
+    address: "",
+    phone: ""
+  });
   
   useEffect(() => {
     fetchData()
@@ -29,7 +45,6 @@ const EditProfile = () => {
       .then((res) => {
         const profileExtract = res.data.data;
         setProfile(profileExtract);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -39,9 +54,27 @@ const EditProfile = () => {
   }
 
 
-  const handleSave = () => {
+  const handleSave = async(profile: any) => {
+    console.log(profile);
+    try {
+      await eCommerceAxios({
+        method: "PUT",
+        headers: { Authorization: `Bearer ${accessToken}` },
+        url: "/users",
+        data: {
+          "username": profile.username,
+          "email": profile.email,
+          "address": profile.address,
+          "phone": profile.phone,
+          "password": profile.password
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      fetchData();
+    };
     navigate("/profile");
-    // save changes to current profile
   };
 
   const handleCancel = () => {
@@ -61,7 +94,8 @@ const EditProfile = () => {
             type="text"
             fullWidth
             variant="standard"
-            defaultValue={profile[0]}
+            defaultValue={profile.username}
+            onChange={(e) => setProfile({ ...profile, username: e.target.value})}
           />
           <TextField
             autoFocus
@@ -71,7 +105,8 @@ const EditProfile = () => {
             type="email"
             fullWidth
             variant="standard"
-            defaultValue={profile[0]}
+            defaultValue={profile.email}
+            onChange={(e) => setProfile({ ...profile, email: e.target.value})}
           />
           <TextField
             autoFocus
@@ -81,7 +116,8 @@ const EditProfile = () => {
             type="text"
             fullWidth
             variant="standard"
-            defaultValue={profile[0]}
+            defaultValue={profile.phone}
+            onChange={(e) => setProfile({ ...profile, phone: e.target.value})}
           />
           <TextField
             id="editAddress"
@@ -91,12 +127,13 @@ const EditProfile = () => {
             fullWidth
             maxRows={5}
             variant="standard"
-            defaultValue={profile[0]}
+            defaultValue={profile.address}
+            onChange={(e) => setProfile({ ...profile, address: e.target.value})}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleSave}>Save Changes</Button>
+          <Button onClick={() => handleSave(profile)}>Save Changes</Button>
         </DialogActions>
       </Dialog>
     </div>

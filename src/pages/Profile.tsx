@@ -1,18 +1,34 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { Typography } from "@mui/material";
 import ProfileImage from '../assets/app-store.png';
 import './Profile.css';
 import axios from 'axios';
+import { eCommerceAxios } from "../axios";
+
+export interface profile {
+  id: number;
+  username: string;
+  email: string;
+  address: string;
+  phone: string;
+}
 
 const Profile = () => {
   const navigate = useNavigate();
   const URL = "http://3.0.145.2/users";
   const accessToken = localStorage.getItem("accessToken");
-  const [profile, setProfile] = useState<any[]>([]);
+  const [profile, setProfile] = useState({
+    id: "",
+    username: "",
+    email: "",
+    address: "",
+    phone: ""
+  });
   
-  React.useEffect(() => {
+  useEffect(() => {
     fetchData()
   }, []);
 
@@ -27,7 +43,7 @@ const Profile = () => {
       .then((res) => {
         const profileExtract = res.data.data;
         setProfile(profileExtract);
-        console.log(res.data);
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -44,12 +60,28 @@ const Profile = () => {
     navigate("/editpassword");
   }
 
-  const handleDeleteAccount = () => {
+  const handleDeleteAccount = async(profile: any) => {
+    try {
+      await eCommerceAxios({
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${accessToken}` },
+        url: `/users`
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      fetchData();
+    };
+
     navigate("/");
     // delete account
   }
 
   return (
+    <div>
+      <Typography variant="h3" gutterBottom mt={3} textAlign="center">
+        My Profile
+      </Typography>
     <div className='profile-main-container'>
       <div className='profile-photo-container'>
         <img
@@ -62,25 +94,25 @@ const Profile = () => {
               <td>Username</td>
             </tr>
             <tr>
-              <td>{profile[0]}</td>
+              <td>{profile.username}</td>
             </tr>
             <tr>
               <td>E-mail</td>
             </tr>
             <tr>
-              <td>{profile[1]}</td>
+              <td>{profile.email}</td>
             </tr>
             <tr>
               <td>Handphone Number</td>
             </tr>
             <tr>
-              <td>{profile[2]}</td>
+              <td>{profile.phone}</td>
             </tr>
             <tr>
               <td>Address</td>
             </tr>
             <tr>
-              <td>{profile[5]}</td>
+              <td>{profile.address}</td>
             </tr>
           </tbody>
         </table>
@@ -98,10 +130,11 @@ const Profile = () => {
           </Button> <br />
         <Button
           className='profile-button3' 
-          onClick={() => handleDeleteAccount()}
+          onClick={() => handleDeleteAccount(profile)}
           variant="outlined" size="small" color="error">Delete Account
           </Button>
       </div>
+    </div>
     </div>
   )
 };

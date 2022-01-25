@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 import Photo from '../assets/app-store.png';
 import './MyProduct.css';
 
@@ -59,6 +60,10 @@ const MyProduct = () => {
   }
 
   return (
+    <div>
+      <Typography variant="h3" gutterBottom mt={3} textAlign="center">
+        My Product
+      </Typography>
     <div className='myproduct-main-container'>
       <div>
         <Button
@@ -83,7 +88,7 @@ const MyProduct = () => {
         </div>
       </div>
     </div>
-    
+    </div>
   )
 }
 
