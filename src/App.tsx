@@ -59,7 +59,8 @@ function App() {
                 />
                 <Route
                   path="/order"
-                  element={isAuth ? <Order /> : <Navigate to="/login" />}
+                  element={<Order />}
+                  // element={isAuth ? <Order /> : <Navigate to="/login" />}
                 />
                 <Route
                   path="/myproduct"
