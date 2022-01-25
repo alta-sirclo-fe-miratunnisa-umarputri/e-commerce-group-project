@@ -44,3 +44,29 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# Contents
+
+This project tries to simulate an e-commerce webpage, with few of their functionality. This project consists of 6 pages and 5 modal pages.
+
+## Home (/)
+
+### Login Modal (/login)
+
+### Register (/register)
+
+## My Product (/myproduct)
+
+### Add Item (/additem)
+
+## Product Detail (/productdetail)
+
+## Cart (/cart)
+
+## Order (/order)
+
+## Profile (/profile)
+
+### Edit Profile (/editprofile)
+
+### Edit Password (/editpassword)
