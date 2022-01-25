@@ -42,14 +42,14 @@ const AddItem = () => {
       await eCommerceAxios({
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
-        url: "products",
-        data: {
-          category_id: 1,
-          name: "nasi",
-          deskripsi: "makanan pokok",
-          gambar: "url gambar",
-          harga: 9000,
-          stock: 10 
+        url: "/products",
+        data: { 
+          "category_id": 1,
+          "name": document.getElementById('addItemName'),
+          "deskripsi": document.getElementById('addItemDescription'),
+          "gambar": "url gambar",
+          "harga": document.getElementById('addItemPrice'),
+          "stock": document.getElementById('addItemStock') 
         },
       });
     } catch (err) {
