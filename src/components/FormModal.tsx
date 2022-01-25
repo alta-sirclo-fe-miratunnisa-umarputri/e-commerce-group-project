@@ -28,16 +28,12 @@ const FormModal = () => {
 
   const isPathLogin = location.pathname === "/login";
 
-  const email = emailRef.current?.value;
-  const password = passwordRef.current?.value;
-  const username = usernameRef.current?.value;
-  const address = addressRef.current?.value;
-  const phone = phoneRef.current?.value;
-
   const handleLogin = async () => {
     setIsLoading(true);
 
     try {
+      const password = passwordRef.current?.value;
+      const username = usernameRef.current?.value;
       const { data } = await eCommerceAxios({
         method: "POST",
         url: "/login",
@@ -62,6 +58,11 @@ const FormModal = () => {
     setIsLoading(true);
 
     try {
+      const email = emailRef.current?.value;
+      const password = passwordRef.current?.value;
+      const username = usernameRef.current?.value;
+      const address = addressRef.current?.value;
+      const phone = phoneRef.current?.value;
       await eCommerceAxios({
         method: "POST",
         url: "/users",
