@@ -42,14 +42,14 @@ const AddItem = () => {
       await eCommerceAxios({
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
-        url: "/products",
-        data: { 
-          "category_id": 1,
-          "name": document.getElementById('addItemName'),
-          "deskripsi": document.getElementById('addItemDescription'),
-          "gambar": "url gambar",
-          "harga": document.getElementById('addItemPrice'),
-          "stock": document.getElementById('addItemStock') 
+        url: "products",
+        data: {
+          category_id: 1,
+          name: "nasi",
+          deskripsi: "makanan pokok",
+          gambar: "url gambar",
+          harga: 9000,
+          stock: 10 
         },
       });
     } catch (err) {
@@ -125,7 +125,7 @@ const AddItem = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleAdd}>Add Item</Button>
+          <Button onClick={() => handleAdd()}>Add Item</Button>
         </DialogActions>
       </Dialog>
     </div>
