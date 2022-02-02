@@ -20,14 +20,14 @@ export interface profile {
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const URL = "http://3.0.145.2/users";
+  const URL = "http://18.141.193.84/users";
   const accessToken = localStorage.getItem("accessToken");
   const [profile, setProfile] = useState({
-    id: "",
     username: "",
     email: "",
     address: "",
-    phone: ""
+    phone: "",
+    password: ""
   });
   
   useEffect(() => {
@@ -54,7 +54,7 @@ const EditProfile = () => {
   }
 
 
-  const handleSave = async(profile: any) => {
+  const handleSave = async(item: any) => {
     console.log(profile);
     try {
       await eCommerceAxios({
@@ -62,11 +62,11 @@ const EditProfile = () => {
         headers: { Authorization: `Bearer ${accessToken}` },
         url: "/users",
         data: {
-          "username": profile.username,
-          "email": profile.email,
-          "address": profile.address,
-          "phone": profile.phone,
-          "password": profile.password
+          "username": item.username,
+          "email": item.email,
+          "address": item.address,
+          "phone": item.phone,
+          "password": item.password
         }
       });
     } catch (err) {
@@ -94,7 +94,6 @@ const EditProfile = () => {
             type="text"
             fullWidth
             variant="standard"
-            defaultValue={profile.username}
             onChange={(e) => setProfile({ ...profile, username: e.target.value})}
           />
           <TextField
@@ -105,7 +104,6 @@ const EditProfile = () => {
             type="email"
             fullWidth
             variant="standard"
-            defaultValue={profile.email}
             onChange={(e) => setProfile({ ...profile, email: e.target.value})}
           />
           <TextField
@@ -116,7 +114,6 @@ const EditProfile = () => {
             type="text"
             fullWidth
             variant="standard"
-            defaultValue={profile.phone}
             onChange={(e) => setProfile({ ...profile, phone: e.target.value})}
           />
           <TextField
@@ -127,8 +124,17 @@ const EditProfile = () => {
             fullWidth
             maxRows={5}
             variant="standard"
-            defaultValue={profile.address}
             onChange={(e) => setProfile({ ...profile, address: e.target.value})}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="editPassword"
+            label="Password"
+            type="password"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setProfile({ ...profile, password: e.target.value})}
           />
         </DialogContent>
         <DialogActions>

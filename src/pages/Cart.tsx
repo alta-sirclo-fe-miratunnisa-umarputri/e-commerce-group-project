@@ -13,7 +13,7 @@ import { eCommerceAxios } from "../axios";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const URL = "http://3.0.145.2/carts";
+  const URL = "http://18.141.193.84/carts";
   const accessToken = localStorage.getItem("accessToken");
   const [carts, setCarts] = useState<any[]>([]);
   let price = 0;
@@ -32,6 +32,7 @@ const Cart = () => {
       .get(URL, config)
       .then((res) => {
         setCarts(res.data.data);
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -48,7 +49,7 @@ const Cart = () => {
       await eCommerceAxios({
         method: "DELETE",
         headers: { Authorization: `Bearer ${accessToken}` },
-        url: `/carts/1`,
+        url: `/carts/${item.id}`,
       });
     } catch (err) {
       console.log(err);

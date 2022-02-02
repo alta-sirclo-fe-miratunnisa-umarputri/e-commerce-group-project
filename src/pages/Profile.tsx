@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { Typography } from "@mui/material";
@@ -7,6 +7,7 @@ import ProfileImage from '../assets/app-store.png';
 import './Profile.css';
 import axios from 'axios';
 import { eCommerceAxios } from "../axios";
+import AuthContext from "../context/AuthContext";
 
 export interface profile {
   id: number;
@@ -18,8 +19,9 @@ export interface profile {
 
 const Profile = () => {
   const navigate = useNavigate();
-  const URL = "http://3.0.145.2/users";
+  const URL = "http://18.141.193.84/users";
   const accessToken = localStorage.getItem("accessToken");
+  const { isAuth, setIsAuth } = useContext(AuthContext);
   const [profile, setProfile] = useState({
     id: "",
     username: "",
@@ -43,7 +45,6 @@ const Profile = () => {
       .then((res) => {
         const profileExtract = res.data.data;
         setProfile(profileExtract);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -71,6 +72,7 @@ const Profile = () => {
       console.log(err);
     } finally {
       fetchData();
+      setIsAuth(false);
     };
 
     navigate("/");
@@ -85,7 +87,7 @@ const Profile = () => {
     <div className='profile-main-container'>
       <div className='profile-photo-container'>
         <img
-          src={ ProfileImage } width="200px" height="200px" alt=""/>
+          src="https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_960_720.png" width="200px" height="200px" alt=""/>
       </div>
       <div className='profile-table-container'>
         <table>

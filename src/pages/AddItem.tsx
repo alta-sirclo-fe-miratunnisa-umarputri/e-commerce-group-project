@@ -8,6 +8,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { eCommerceAxios } from "../axios";
+import { useState } from 'react';
 
 const categories = [
   {
@@ -31,13 +32,21 @@ const categories = [
 const AddItem = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
-  const [category, setCategory] = React.useState('2');
+  const [category, setCategory] = useState('2');
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCategory(event.target.value);
   };
+  const [product, setProduct] = useState({
+    category_id: 1,
+    name: "",
+    deskripsi: "",
+    gambar: "",
+    harga: 1,
+    stock: 1
+  })
 
 
-  const handleAdd = async() => {
+  const handleAdd = async(item: any) => {
     try {
       await eCommerceAxios({
         method: "POST",
@@ -45,11 +54,11 @@ const AddItem = () => {
         url: "/products",
         data: { 
           "category_id": 1,
-          "name": document.getElementById('addItemName'),
-          "deskripsi": document.getElementById('addItemDescription'),
-          "gambar": "url gambar",
-          "harga": document.getElementById('addItemPrice'),
-          "stock": document.getElementById('addItemStock') 
+          "name": item.name,
+          "deskripsi": item.deskripsi,
+          "gambar": item.gambar,
+          "harga": item.harga,
+          "stock": item.stock
         },
       });
     } catch (err) {
@@ -94,6 +103,17 @@ const AddItem = () => {
             type="text"
             fullWidth
             variant="standard"
+            onChange={(e) => setProduct({ ...product, name: e.target.value})}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="addItemImage"
+            label="Item Image (url)"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setProduct({ ...product, gambar: e.target.value})}
           />
           <TextField
             autoFocus
@@ -103,6 +123,7 @@ const AddItem = () => {
             type="text"
             fullWidth
             variant="standard"
+            onChange={(e) => setProduct({ ...product, harga: parseInt(e.target.value)})}
           />
           <TextField
             autoFocus
@@ -112,6 +133,7 @@ const AddItem = () => {
             type="number"
             fullWidth
             variant="standard"
+            onChange={(e) => setProduct({ ...product, stock: parseInt(e.target.value)})}
           />
           <TextField
             id="addDescription"
@@ -121,11 +143,12 @@ const AddItem = () => {
             fullWidth
             maxRows={3}
             variant="standard"
+            onChange={(e) => setProduct({ ...product, deskripsi: e.target.value})}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={() => handleAdd()}>Add Item</Button>
+          <Button onClick={() => handleAdd(product)}>Add Item</Button>
         </DialogActions>
       </Dialog>
     </div>
