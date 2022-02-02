@@ -9,8 +9,8 @@ import './MyProduct.css';
 
 const MyProduct = () => {
   const navigate = useNavigate();
-  const URLget = "3.0.145.2/user-products";
-  const URLdelete = "3.0.145.2/products/";
+  const URLget = "18.141.193.84/user-products";
+  const URLdelete = "18.141.193.84/products/";
   const accessToken = localStorage.getItem("accessToken");
   const [products, setProducts] = useState({});
 
@@ -30,7 +30,7 @@ const MyProduct = () => {
         console.log(res);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       })
       .finally(
       )
